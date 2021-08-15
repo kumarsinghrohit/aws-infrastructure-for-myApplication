@@ -1,1 +1,39 @@
-
+[
+  {
+  "cpu": 1024,
+  "environment" : [
+    {"name" : "PHP_MEMORY_LIMIT", "value" : "128M"},
+    {"name" : "WORDPRESS_CONFIG_EXTRA", "value" : "define( 'WP_MEMORY_LIMIT', '64M' );define( 'WP_MAX_MEMORY_LIMIT', '256M');"},
+    {"name" : "WORDPRESS_DB_HOST", "value" : "${WORDPRESS_DB_HOST}"},
+    {"name" : "WORDPRESS_DB_NAME", "value" : "${WORDPRESS_DB_NAME}"},
+    {"name" : "WORDPRESS_DB_PASSWORD", "value" : "${WORDPRESS_DB_PASSWORD}"},
+    {"name" : "WORDPRESS_DB_USER", "value" : "${WORDPRESS_DB_USER}"},
+    {"name" : "WORDPRESS_TABLE_PREFIX", "value" : "${WORDPRESS_TABLE_PREFIX}"}
+  ],
+  "essential": true,
+  "image": "${DOCKER_IMAGE}",
+  "logConfiguration": {
+    "logDriver": "awslogs",
+    "options": {
+      "awslogs-group": "${AWS_LOG_GROUP}",
+      "awslogs-region": "${AWS_LOG_REGION}",
+      "awslogs-stream-prefix": "wordpress"
+    }
+  },
+  "memoryReservation": 1024,
+  "mountPoints": [
+    {
+      "containerPath": "/var/www/html/wp-content",
+      "sourceVolume": "${EFS_VOLUME}"
+    }
+  ],
+  "name": "wordpress",
+  "portMappings": [
+    {
+      "containerPort": 80,
+      "hostPort": 80,
+      "protocol": "tcp"
+    }
+  ],
+  "volumesFrom": []
+}]
