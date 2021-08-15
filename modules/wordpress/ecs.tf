@@ -10,7 +10,7 @@ resource "aws_ecs_cluster" "myApplication" {
 }
 
 # auto scaling group
-resource "aws_autoscaling_group" "mosaiqone" {
+resource "aws_autoscaling_group" "myApplication" {
   name                 = var.name
   vpc_zone_identifier  = var.vpc_subnets["private"]
   launch_configuration = aws_launch_configuration.myApplication.name
